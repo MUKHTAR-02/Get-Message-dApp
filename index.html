@@ -31,33 +31,33 @@
         </div>
       </div>
       
-          
+      <!-- background image -->
+      <div class="bg-image"></div>
 
-    <!-- line break -->
-    <br>
-
-    <!-- flip card -->
+    <div class="bg-text">
+      <!-- flip card -->
     <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img src="ethereum blue logo.jpg" alt="Avatar" style="width:300px;height:300px;">
-          </div>
-          <div class="flip-card-back">
-            <h1>Mukhtar Khan</h1> 
-            <p>WEB3 Developer</p> 
-            <p>First dApp created by him</p>
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <img src="ethereum blue logo.jpg" alt="Avatar" style="width:300px;height:300px;">
+        </div>
+        <div class="flip-card-back">
+          <h1>Mukhtar Khan</h1> 
+          <p>WEB3 Developer</p> 
+          <p>First dApp created by M2R</p>
 
-            <label for="mood">Input Mood:</label> <br />
-            <input type="text" placeholder="Write any msg" id="mood" />
+          <label for="mood">Input Mood:</label> <br />
+          <input type="text" placeholder="Write any msg" id="mood" />
 
-            <!-- M2R edited : Mood == msg -->
-            <button onclick="setMood()" class="button">Set Msg</button> <!-- this msg == mood -->
-            <button onclick="getMood()" class="button">Get Msg</button>
-            <p id="showMood"></p>
+          <!-- M2R edited : Mood == msg -->
+          <button onclick="setMood()" class="button">Set Msg</button> <!-- this msg == mood -->
+          <button onclick="getMood()" class="button">Get Msg</button>
+          <p id="showMood"></p>
 
-          </div>
         </div>
       </div>
+    </div>
+    </div>
 
       <!-- line break -->
       <br>
@@ -118,7 +118,7 @@ provider.send("eth_requestAccounts", []).then(() => {
 async function getMood() {
   const getMoodPromise = MoodContract.getMood();
   const Mood = await getMoodPromise;
-  document.getElementById("showMood").innerText = `Your Mood: ${Mood}`;
+  document.getElementById("showMood").innerText = `Your Msg: ${Mood}`;
   console.log(Mood);
 }
 
