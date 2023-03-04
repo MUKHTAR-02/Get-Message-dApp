@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <!-- css link -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Search icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>First dApp</title>
+  </head>
+  <body>
+
+    <!-- Nav bar -->
+    <div class="topnav">
+        <a class="active" href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <div class="search-container">
+          <form action="/action_page.php">
+            <input type="text" placeholder="Search.." name="search">
+            <button type="submit"><i class="fa fa-search"></i></button>
+          </form>
+        </div>
+      </div>
+      
+          
+
+    <!-- line break -->
+    <br>
+
+    <!-- flip card -->
+    <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="ethereum blue logo.jpg" alt="Avatar" style="width:300px;height:300px;">
+          </div>
+          <div class="flip-card-back">
+            <h1>Mukhtar Khan</h1> 
+            <p>WEB3 Developer</p> 
+            <p>First dApp created by him</p>
+
+            <label for="mood">Input Mood:</label> <br />
+            <input type="text" placeholder="Write any msg" id="mood" />
+
+            <!-- M2R edited : Mood == msg -->
+            <button onclick="setMood()" class="button">Set Msg</button> <!-- this msg == mood -->
+            <button onclick="getMood()" class="button">Get Msg</button>
+            <p id="showMood"></p>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- line break -->
+      <br>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    
+    <script
+      src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+      type="application/javascript"
+    ></script>
+    
+    <script>
+      const MoodContractAddress = "0x3dF489132212e45AB42c5ed385df320854dC191D";
+      const MoodContractABI = [
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_mood",
+				"type": "string"
+			}
+		],
+		"name": "setMood",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getMood",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+] 
+      let MoodContract;
+      let signer;
+
+      const provider = new ethers.providers.Web3Provider(window.ethereum, "goerli");
+
+provider.send("eth_requestAccounts", []).then(() => {
+  provider.listAccounts().then(function (accounts) {
+    signer = provider.getSigner(accounts[0]);
+    MoodContract = new ethers.Contract(
+      MoodContractAddress,
+      MoodContractABI,
+      signer
+    );
+  });
+});
+async function getMood() {
+  const getMoodPromise = MoodContract.getMood();
+  const Mood = await getMoodPromise;
+  document.getElementById("showMood").innerText = `Your Mood: ${Mood}`;
+  console.log(Mood);
+}
+
+async function setMood() {
+  const mood = document.getElementById("mood").value;
+  const setMoodPromise = MoodContract.setMood(mood);
+  await setMoodPromise;
+}
+
+</script>
+
+</body>
+</html>
